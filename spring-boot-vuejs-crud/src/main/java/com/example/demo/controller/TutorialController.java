@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Tutorial;
 import com.example.demo.repository.TutorialRepository;
 
-@CrossOrigin(origins = "http://localhost")
+@CrossOrigin(origins = {"http://localhost", "http://localhost:8081"})
 @RestController
 @RequestMapping("/api")
 public class TutorialController {
@@ -38,9 +38,9 @@ public class TutorialController {
 			} else {
 				tutorialRepository.findByTitleContaining(title).forEach(tutorials::add);
 			}
-			if (tutorials.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
+			//if (tutorials.isEmpty()) {
+			//	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			//}
 			return new ResponseEntity<>(tutorials, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
