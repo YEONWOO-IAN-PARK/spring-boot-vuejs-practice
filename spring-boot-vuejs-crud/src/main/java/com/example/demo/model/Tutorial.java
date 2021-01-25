@@ -7,11 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tutorials")
-@Data
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class Tutorial {
 
 	@Id
@@ -26,5 +32,12 @@ public class Tutorial {
 	
 	@Column(name = "published")
 	private boolean published;
+	
+	@Builder
+	public Tutorial(String title, String description, boolean published) {
+		this.title = title;
+		this.description = description;
+		this.published = published;
+	}
 	
 }

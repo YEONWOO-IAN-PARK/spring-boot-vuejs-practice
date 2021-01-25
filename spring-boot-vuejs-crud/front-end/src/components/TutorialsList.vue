@@ -19,7 +19,7 @@
       <h4>Tutorials List</h4>
       <ul class="list-group">
         <li class="list-group-item"
-          :class="{ active: index == currentIntex }"
+          :class="{ active: index == currentIndex }"
           v-for="(tutorial, index) in tutorials"
           :key="index"
           @click="setActiveTutorial(tutorial, index)">
