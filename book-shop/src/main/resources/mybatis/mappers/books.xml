@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookMapper">
+	
+	<select id="getTotalRows" parameterType="map" resultType="int">
+		select
+			count(*)
+		from
+			shop2_books
+		<where>
+			<if test="keyword != null">
+				book_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="getBooks" parameterType="map" resultType="Book">
+		select *
+		from (
+			select
+				row_number() over (order by book_no desc) rn,
+				book_no as no,
+				book_title as title,
+				book_writer as writer,
+				book_translator as translator,
+				book_publisher as publisher,
+				book_pub_date as pubDate,
+				book_stock as stock,
+				book_status as status,
+				book_price as price,
+				book_sale_price as salePrice,
+				book_discount_rate as discountRate,
+				book_save_point as savePoint,
+				book_review_point as reviewPoint,
+				book_review_count as reviewCount,
+				book_bestseller as bestseller,
+				book_free_delivery as freeDelivery,
+				book_created_date as createDate
+			from
+				shop2_books
+			<where>
+				<if test="keyword != null">
+					book_title like '%' || #{keyword} || '%'
+				</if>
+			</where>
+				)
+		where
+			rn between #{begin} and #{end}
+	</select>
+</mapper>
