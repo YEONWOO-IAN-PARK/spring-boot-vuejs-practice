@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,10 +41,20 @@ public class BookController {
 		Pagination pagination = new Pagination(page, rows);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("page", page);
-		result.put("rows", rows);
-		result.put("pages", pagination.getPages());
+		result.put("status", "ok");
+		result.put("page", pagination);
 		result.put("items", books);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("/books/{no}")
+	public ResponseEntity<Map<String, Object>> getBook(@PathVariable("no") int bookNo) {
+		Book book = bookService.getBook(bookNo);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", "ok");
+		result.put("items", List.of(book));
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

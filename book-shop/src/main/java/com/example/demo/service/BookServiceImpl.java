@@ -24,4 +24,9 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getBooks(Map<String, Object> condition) {
 		return bookMapper.getBooks(condition);
 	}
+	
+	@Override
+	public Book getBook(int bookNo) {
+		return bookMapper.getBookByNo(bookNo);
+	}
 }

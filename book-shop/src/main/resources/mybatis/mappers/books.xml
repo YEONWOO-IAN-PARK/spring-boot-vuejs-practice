@@ -47,4 +47,30 @@
 		where
 			rn between #{begin} and #{end}
 	</select>
+	
+	<select id="getBookByNo" parameterType="int" resultType="Book">
+		select
+			book_no as no,
+			book_title as title,
+			book_writer as writer,
+			book_translator as translator,
+			book_publisher as publisher,
+			book_pub_date as pubDate,
+			book_stock as stock,
+			book_status as status,
+			book_price as price,
+			book_sale_price as salePrice,
+			book_discount_rate as discountRate,
+			book_save_point as savePoint,
+			book_review_point as reviewPoint,
+			book_review_count as reviewCount,
+			book_bestseller as bestseller,
+			book_free_delivery as freeDelivery,
+			book_created_date as createDate
+		from
+			shop2_books
+		where
+			book_no = #{value}
+	</select>
+	
 </mapper>

@@ -9,4 +9,5 @@ public interface BookService {
 
 	int getTotalRows(Map<String, Object> condition);
 	List<Book> getBooks(Map<String, Object> condition);
+	Book getBook(int bookNo);
 }

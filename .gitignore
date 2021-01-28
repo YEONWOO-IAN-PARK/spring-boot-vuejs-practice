@@ -242,4 +242,6 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+images/
+
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven,gradle,node,vuejs

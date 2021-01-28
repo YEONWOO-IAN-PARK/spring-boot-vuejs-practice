@@ -12,4 +12,5 @@ public interface BookMapper {
 
 	int getTotalRows(Map<String, Object> codition);
 	List<Book> getBooks(Map<String, Object> condition);
+	Book getBookByNo(int bookNo);
 }
