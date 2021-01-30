@@ -28,7 +28,10 @@
               </tr>
             </tbody>
           </table>
-          <pagination :pageRange="pageRange" :current-page="currentPage" :total-pages="totalPages"></pagination>
+          <pagination :pageRange="pageRange" 
+            :current-page="currentPage" 
+            :total-pages="totalPages"
+            @move="move"></pagination>
         </div>
       </div>
     </div>
@@ -52,8 +55,21 @@ export default {
     }
   },
   methods: {
+    move: function(page) {
+      this.currentPage = page
+      this.refreshBookList();
+    },
     generatePageRange: function(begin, end) {
       this.pageRange = new Array(end-begin+1).fill(begin).map((n,i)=>n+i);
+    },
+    refreshBookList: function() {
+      BookService.getBooks(this.currentPage)
+        .then(response => {
+          this.books = response.data.items;
+          this.paging = response.data.page;
+          this.totalPages = this.paging.pages;
+          this.generatePageRange(this.paging.begin, this.paging.end);
+        })
     }
   },
   components: {
@@ -61,14 +77,7 @@ export default {
   },
   created() {
     this.currentPage = this.$route.params.page || 1;
-    
-    BookService.getBooks(this.$route.params.page)
-      .then(response => {
-        this.books = response.data.items;
-        this.paging = response.data.page;
-        this.totalPages = this.paging.pages;
-        this.generatePageRange(this.paging.begin, this.paging.end);
-      })
+    this.refreshBookList();
   },
 }
 </script>

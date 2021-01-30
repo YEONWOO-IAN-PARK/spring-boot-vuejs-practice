@@ -2,7 +2,7 @@
   <nav>
     <ul class="pagination justify-content-center">
       <li class="page-item" :class="{disabled: currentPage == 1}">
-        <a class="page-link" href="#" tabindex="-1">Previous</a>
+        <a class="page-link" @click="move(currentPage - 1)">Previous</a>
       </li>
       <li class="page-item"
         v-for="num in pageRange"
@@ -12,7 +12,7 @@
           @click="move(num)">{{ num }}</a>
       </li>
       <li class="page-item" :class="{disabled: currentPage == totalPages}">
-        <a class="page-link" href="#">Next</a>
+        <a class="page-link" @click="move(currentPage + 1)">Next</a>
       </li>
     </ul>
   </nav>
@@ -24,7 +24,7 @@ export default {
   props: ["pageRange", 'currentPage', 'totalPages'],
   methods: {
     move: function(num) {
-      console.log(num);
+      this.$emit("move", num);
     }
   }
 }
