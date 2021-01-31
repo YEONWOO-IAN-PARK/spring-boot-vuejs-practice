@@ -4,30 +4,13 @@
       <div class="card">
         <div class="card-header">책 목록</div>
         <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>순번</th>
-                <th>제목</th>
-                <th>저자</th>
-                <th class="text-right pr-5">가격</th>
-                <th>상태</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(book, index) in books" :key="index">
-                <td>{{ index + 1 }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.writer }}</td>
-                <td class="text-right pr-5">{{ book.price | currency }} 원</td>
-                <td>{{ book.status }}</td>
-                <td>
-                  <router-link :to="'/book/detail/'+currentPage + '/' + book.no"  class="btn btn-primary btn-sm">상세정보</router-link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="row">
+            <div class="col-3 mb-3"
+              v-for="book in books"
+              :key="book.no">
+              <book-item :book="book" :current-page="currentPage"></book-item>
+            </div>
+          </div>
           <pagination :pageRange="pageRange" 
             :current-page="currentPage" 
             :total-pages="totalPages"
@@ -41,6 +24,7 @@
 <script>
 import '../../filters/commonFilters'
 import BookService from '../../services/BookService'
+import BookItem from './BookListItem'
 import Pagination from '../common/Pagination'
 
 export default {
@@ -48,6 +32,7 @@ export default {
   data() {
     return {
       currentPage: 0,
+      currentPageCategory: -1,
       totalPages: 0,
       pageRange:[],
       paging: {},
@@ -57,13 +42,13 @@ export default {
   methods: {
     move: function(page) {
       this.currentPage = page
-      this.refreshBookList();
+      this.refreshBookList(page, this.currentPageCategory);
     },
     generatePageRange: function(begin, end) {
       this.pageRange = new Array(end-begin+1).fill(begin).map((n,i)=>n+i);
     },
-    refreshBookList: function() {
-      BookService.getBooks(this.currentPage)
+    refreshBookList: function(page, category) {
+      BookService.getBooks(page, category)
         .then(response => {
           this.books = response.data.items;
           this.paging = response.data.page;
@@ -72,12 +57,19 @@ export default {
         })
     }
   },
+  watch: {
+    $route() {
+      this.refreshBookList(this.$route.params.page, this.$route.params.category);
+    }
+  },
   components: {
-    'pagination': Pagination
+    'pagination': Pagination,
+    'book-item': BookItem
   },
   created() {
-    this.currentPage = this.$route.params.page || 1;
-    this.refreshBookList();
+    this.currentPage = this.$route.params.page;
+    this.currentPageCategory = this.$route.params.category;
+    this.refreshBookList(this.currentPage, this.currentPageCategory);
   },
 }
 </script>

@@ -23,22 +23,24 @@ import com.example.demo.service.BookService;
 @RequestMapping("/api")
 public class BookController {
 	
-	int ROWS_PER_PAGE = 5;
+	int ROWS_PER_PAGE = 4;
 	int PAGES_PER_BLOCK = 5;
 
 	@Autowired
 	BookService bookService;
 	
 	@GetMapping("/books")
-	public ResponseEntity<Map<String, Object>> getBooks(@RequestParam(name = "page", required = false, defaultValue = "1") int page) {
+	public ResponseEntity<Map<String, Object>> getBooks(@RequestParam(name = "category", required = false, defaultValue = "-1") int categoryNo,
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page) {
 		Map<String, Object> condition = new HashMap<>();
+		condition.put("categoryNo", categoryNo);
 		condition.put("begin", (page - 1)*ROWS_PER_PAGE + 1);
 		condition.put("end", page*ROWS_PER_PAGE);
 		
 		int rows = bookService.getTotalRows(condition);
 		List<Book> books = bookService.getBooks(condition);
 		
-		Pagination pagination = new Pagination(page, rows);
+		Pagination pagination = new Pagination(page, rows, ROWS_PER_PAGE);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("status", "ok");

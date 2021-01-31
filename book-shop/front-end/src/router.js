@@ -7,7 +7,12 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/book/list/:page',
+      path: '/home',
+      name: 'Home',
+      component: () => import('./components/Home')
+    },
+    {
+      path: '/book/list/:page/:category?',
       name: 'BookList',
       component: () => import('./components/book/BookList')
     },

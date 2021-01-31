@@ -8,8 +8,11 @@
 		from
 			shop2_books
 		<where>
+			<if test="categoryNo != -1">
+				category_no = #{categoryNo}
+			</if>
 			<if test="keyword != null">
-				book_title like '%' || #{keyword} || '%'
+				and book_title like '%' || #{keyword} || '%'
 			</if>
 		</where>
 	</select>
@@ -39,11 +42,13 @@
 			from
 				shop2_books
 			<where>
-				<if test="keyword != null">
-					book_title like '%' || #{keyword} || '%'
+				<if test="categoryNo != -1">
+					category_no = #{categoryNo}
 				</if>
-			</where>
-				)
+				<if test="keyword != null">
+					and book_title like '%' || #{keyword} || '%'
+				</if>
+			</where>)
 		where
 			rn between #{begin} and #{end}
 	</select>

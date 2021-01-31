@@ -4,13 +4,11 @@
       <div class="card">
           <div class="row">
             <div class="col-md-3">
-                <!-- <img src="../resources/images/.jpg" class="card-img" alt="..."> -->
+              <img :src="`/assets/images/${book.no}.jpg`" class="card-img">
             </div>
             <div class="col-md-9">
                 <div class="card-body">
                   <h5 class="card-title">{{ book.title }}</h5>
-                  <form id="book-form" method="get" action="../order/form.hta">
-                    <input type="hidden" name="bookno" value="" />
                     <table class="table">
                       <colgroup>
                         <col width="18%">
@@ -67,7 +65,6 @@
                         </tr>
                       </tbody>
                     </table>
-                  </form>
                 </div>
             </div>
         </div>
@@ -84,15 +81,17 @@ export default {
   data() {
     return {
       page:1,
-      book: {}
+      book: {},
     }
   },
-  mounted() {
+  computed: {
+    
+  },
+  created() {
     this.page = this.$route.params.page;
     BookService.getBook(this.$route.params.no)
       .then(response => {
         this.book = response.data.items[0];
-        console.log(response.data)
       })
   }
 }
