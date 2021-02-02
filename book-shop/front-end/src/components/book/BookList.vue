@@ -2,7 +2,7 @@
   <div>
     <list :title="`도서목록`" :books="books" :page="page" :category="category"></list>
     <pagination :pageRange="pageRange" 
-      :current-page="page" 
+      :page="page" 
       :total-pages="totalPages"
       @move="move"></pagination>
   </div>

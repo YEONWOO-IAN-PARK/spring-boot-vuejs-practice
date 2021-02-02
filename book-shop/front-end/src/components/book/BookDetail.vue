@@ -91,7 +91,8 @@ export default {
     
   },
   created() {
-    this.page = this.$route.params.page;
+    this.page = this.$route.params.page || 1;
+
     if (this.$route.params.category) {
       this.category = this.$route.params.category
     }

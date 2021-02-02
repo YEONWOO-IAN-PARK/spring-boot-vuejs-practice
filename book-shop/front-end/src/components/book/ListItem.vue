@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <router-link v-if="category" :to="`/book/detail/${currentPage}/${book.no}/${category}`"><img :src="`/assets/images/${book.no}.jpg`" alt="" class="img-thumbnail"></router-link>
-      <router-link v-else :to="`/book/detail/${currentPage}/${book.no}`"><img :src="`/assets/images/${book.no}.jpg`" alt="" class="img-thumbnail"></router-link>
+      <router-link v-else :to="`/book/detail/${page}/${book.no}`"><img :src="`/assets/images/${book.no}.jpg`" alt="" class="img-thumbnail"></router-link>
       <strong class="book-title">{{book.title}}</strong>
       <div class="d-flex justify-content-between">
         <small class="text-secondary">{{ book.writer }}</small>
@@ -25,7 +25,7 @@ import '../../filters/common-filters'
 
 export default {
   name: 'ListItem',
-  props: ['book', 'currentPage', 'category']
+  props: ['book', 'page', 'category']
 }
 </script>
 

@@ -8,7 +8,7 @@
             <div class="col-3 mb-3"
               v-for="book in books"
               :key="book.no">
-              <list-item :book="book" :current-page="page" :category="category"></list-item>
+              <list-item :book="book" :page="page" :category="category"></list-item>
             </div>
           </div>
         </div>
