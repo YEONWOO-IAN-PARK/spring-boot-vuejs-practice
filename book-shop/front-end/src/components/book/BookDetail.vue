@@ -60,7 +60,8 @@
                           <td colspan="2" class="text-right">
                             <button type="button" class="btn btn-primary btn-sm mr-2" onclick="buy()">바로구매</button>
                             <button type="button" class="btn btn-info btn-sm mr-2" onclick="addCartItem()">장바구니</button>
-                            <router-link :to="'/book/list/'+page" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
+                            <router-link v-if='category' :to="`/book/list/${page}/${category}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
+                            <router-link v-else :to="`/book/list/${page}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
                           </td>
                         </tr>
                       </tbody>
@@ -72,8 +73,9 @@
     </div>
   </div>
 </template>
+
 <script>
-import '../../filters/commonFilters'
+import '../../filters/common-filters'
 import BookService from "../../services/BookService"
 
 export default {
@@ -81,6 +83,7 @@ export default {
   data() {
     return {
       page:1,
+      category: undefined,
       book: {},
     }
   },
@@ -89,6 +92,9 @@ export default {
   },
   created() {
     this.page = this.$route.params.page;
+    if (this.$route.params.category) {
+      this.category = this.$route.params.category
+    }
     BookService.getBook(this.$route.params.no)
       .then(response => {
         this.book = response.data.items[0];

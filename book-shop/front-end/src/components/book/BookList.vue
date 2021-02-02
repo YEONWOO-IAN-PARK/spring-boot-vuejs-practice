@@ -1,38 +1,25 @@
 <template>
-  <div class="row mt-3">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">책 목록</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-3 mb-3"
-              v-for="book in books"
-              :key="book.no">
-              <book-item :book="book" :current-page="currentPage"></book-item>
-            </div>
-          </div>
-          <pagination :pageRange="pageRange" 
-            :current-page="currentPage" 
-            :total-pages="totalPages"
-            @move="move"></pagination>
-        </div>
-      </div>
-    </div>
+  <div>
+    <list :title="`도서목록`" :books="books" :page="page" :category="category"></list>
+    <pagination :pageRange="pageRange" 
+      :current-page="page" 
+      :total-pages="totalPages"
+      @move="move"></pagination>
   </div>
 </template>
 
 <script>
-import '../../filters/commonFilters'
+import '../../filters/common-filters'
 import BookService from '../../services/BookService'
-import BookItem from './BookListItem'
+import List from './List'
 import Pagination from '../common/Pagination'
 
 export default {
   name: 'BookList',
   data() {
     return {
-      currentPage: 0,
-      currentPageCategory: -1,
+      page: 1,
+      category: undefined,
       totalPages: 0,
       pageRange:[],
       paging: {},
@@ -41,8 +28,8 @@ export default {
   },
   methods: {
     move: function(page) {
-      this.currentPage = page
-      this.refreshBookList(page, this.currentPageCategory);
+      this.page = page
+      this.refreshBookList(page, this.category);
     },
     generatePageRange: function(begin, end) {
       this.pageRange = new Array(end-begin+1).fill(begin).map((n,i)=>n+i);
@@ -63,17 +50,15 @@ export default {
     }
   },
   components: {
-    'pagination': Pagination,
-    'book-item': BookItem
+    'list': List,
+    'pagination': Pagination
   },
   created() {
-    this.currentPage = this.$route.params.page;
-    this.currentPageCategory = this.$route.params.category;
-    this.refreshBookList(this.currentPage, this.currentPageCategory);
+    this.page = this.$route.params.page;
+    if (this.$route.params.category) {
+      this.category = this.$route.params.category ;
+    }
+    this.refreshBookList(this.page, this.category);
   },
 }
 </script>
-
-<style scoped>
-
-</style>

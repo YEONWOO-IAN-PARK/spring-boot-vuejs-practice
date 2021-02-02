@@ -31,9 +31,13 @@ public class BookController {
 	
 	@GetMapping("/books")
 	public ResponseEntity<Map<String, Object>> getBooks(@RequestParam(name = "category", required = false, defaultValue = "-1") int categoryNo,
+			@RequestParam(name = "type", required = false) String type,
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page) {
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("categoryNo", categoryNo);
+		if (type != null) {
+			condition.put("type", type);
+		}
 		condition.put("begin", (page - 1)*ROWS_PER_PAGE + 1);
 		condition.put("end", page*ROWS_PER_PAGE);
 		

@@ -17,7 +17,7 @@ export default new VueRouter({
       component: () => import('./components/book/BookList')
     },
     {
-      path: '/book/detail/:page/:no',
+      path: '/book/detail/:page/:no/:category?',
       name: 'BookDetail',
       component: () => import('./components/book/BookDetail')
     }

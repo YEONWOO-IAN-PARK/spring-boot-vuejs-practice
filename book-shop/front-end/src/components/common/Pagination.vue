@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="mt-3">
     <ul class="pagination justify-content-center">
       <li class="page-item" :class="{disabled: currentPage == 1}">
         <a class="page-link" @click="move(currentPage - 1)">Previous</a>
