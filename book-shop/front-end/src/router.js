@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import BookRoutes from './path/book'
+import UserRoutes from './path/user'
 
 Vue.use(VueRouter)
 
@@ -11,15 +13,7 @@ export default new VueRouter({
       name: 'Home',
       component: () => import('./components/Home')
     },
-    {
-      path: '/book/list/:page/:category?',
-      name: 'BookList',
-      component: () => import('./components/book/BookList')
-    },
-    {
-      path: '/book/detail/:page/:no/:category?',
-      name: 'BookDetail',
-      component: () => import('./components/book/BookDetail')
-    }
+    ...BookRoutes,
+    ...UserRoutes
   ]
 })
