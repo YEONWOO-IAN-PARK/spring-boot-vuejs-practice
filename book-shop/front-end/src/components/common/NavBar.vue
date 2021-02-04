@@ -12,10 +12,10 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" id="navbardrop-1" data-toggle="dropdown">카테고리</a>
 					<div class="dropdown-menu">
-						<router-link :to="`/book/list/1`" class="dropdown-item">전체</router-link>
-						<router-link :to="`/book/list/1/100`" class="dropdown-item">국내도서</router-link>
-						<router-link :to="`/book/list/1/200`" class="dropdown-item">외국도서</router-link>
-						<router-link :to="`/book/list/1/300`" class="dropdown-item">전자책</router-link>
+						<router-link :to="`/book/list?page=1`" class="dropdown-item">전체</router-link>
+						<router-link :to="`/book/list?page=1&category=100`" class="dropdown-item">국내도서</router-link>
+						<router-link :to="`/book/list?page=1&category=200`" class="dropdown-item">외국도서</router-link>
+						<router-link :to="`/book/list?page=1&category=300`" class="dropdown-item">전자책</router-link>
 					</div>
 				</li>
 			</ul>

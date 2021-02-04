@@ -1,7 +1,7 @@
 <template>
 <div>
   <list :title="`최근 입고된 도서`" :books="recentArrivalBooks" :page="1"></list>
-  <list :title="`베스트셀러 도서`" :books="bestsellerBooks" :aria-current="1"></list>
+  <list :title="`베스트셀러 도서`" :books="bestsellerBooks" :page="1"></list>
 </div>
 </template>
 <script>

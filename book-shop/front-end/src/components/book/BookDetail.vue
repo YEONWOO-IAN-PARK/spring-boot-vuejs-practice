@@ -60,8 +60,8 @@
                           <td colspan="2" class="text-right">
                             <button type="button" class="btn btn-primary btn-sm mr-2" onclick="buy()">바로구매</button>
                             <button type="button" class="btn btn-info btn-sm mr-2" onclick="addCartItem()">장바구니</button>
-                            <router-link v-if='category' :to="`/book/list/${page}/${category}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
-                            <router-link v-else :to="`/book/list/${page}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
+                            <router-link v-if='category' :to="`/book/list?page=${page}&category=${category}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
+                            <router-link v-else :to="`/book/list?page=${page}`" class="btn btn-outline-primary btn-sm">쇼핑계속</router-link>
                           </td>
                         </tr>
                       </tbody>
@@ -91,12 +91,12 @@ export default {
     
   },
   created() {
-    this.page = this.$route.params.page || 1;
+    this.page = this.$route.query.page || 1;
 
-    if (this.$route.params.category) {
-      this.category = this.$route.params.category
+    if (this.$route.query.category) {
+      this.category = this.$route.query.category
     }
-    BookService.getBook(this.$route.params.no)
+    BookService.getBook(this.$route.query.no)
       .then(response => {
         this.book = response.data.items[0];
       })

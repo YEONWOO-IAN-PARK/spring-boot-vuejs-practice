@@ -46,7 +46,7 @@ export default {
   },
   watch: {
     $route() {
-      this.refreshBookList(this.$route.params.page, this.$route.params.category);
+      this.refreshBookList(this.$route.query.page, this.$route.query.category);
     }
   },
   components: {
@@ -54,9 +54,9 @@ export default {
     'pagination': Pagination
   },
   created() {
-    this.page = this.$route.params.page;
-    if (this.$route.params.category) {
-      this.category = this.$route.params.category ;
+    this.page = this.$route.query.page;
+    if (this.$route.query.category) {
+      this.category = this.$route.query.category ;
     }
     this.refreshBookList(this.page, this.category);
   },
