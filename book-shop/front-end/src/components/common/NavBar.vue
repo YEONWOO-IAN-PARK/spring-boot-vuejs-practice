@@ -21,6 +21,9 @@
 			</ul>
 			<ul class="navbar-nav">
 				<li class="nav-item">
+					<router-link :to="`/user/login`" class="nav-link">로그인</router-link>
+				</li>
+				<li class="nav-item">
 					<router-link :to="`/user/form`" class="nav-link">회원가입</router-link>
 				</li>
 			</ul>
