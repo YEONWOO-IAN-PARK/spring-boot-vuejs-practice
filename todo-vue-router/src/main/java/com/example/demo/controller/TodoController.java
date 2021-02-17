@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -84,5 +85,11 @@ public class TodoController {
 			responseData.setMessage("아이디와 일치하는 작업정보를 찾을 수 없습니다.");
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
+	}
+	
+	@DeleteMapping("/todos/{id}")
+	public ResponseEntity<Void> deleteTodo(@PathVariable("id") long id) {
+		todoRepository.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
