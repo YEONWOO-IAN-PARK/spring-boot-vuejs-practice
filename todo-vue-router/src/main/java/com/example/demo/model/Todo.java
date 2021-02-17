@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,7 +51,22 @@ public class Todo {
 	@Column(name = "TODO_DELETED_DATE")
 	LocalDate deletedDate;
 	
-	enum TodoStatus {
+	
+	@Builder
+	public Todo(String username, String title, String description, LocalDate dueDate, TodoStatus status,
+			LocalDate registeredDate) {
+		super();
+		this.username = username;
+		this.title = title;
+		this.description = description;
+		this.dueDate = dueDate;
+		this.status = status;
+		this.registeredDate = registeredDate;
+	}
+
+
+
+	public enum TodoStatus {
 		COMPLETED, DELETED, DELAYED, REGISTERED;
 	}
 }
