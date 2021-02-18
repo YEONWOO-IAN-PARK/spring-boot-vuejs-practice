@@ -10,8 +10,8 @@ class TodoService {
     return http.get(`/todos/${id}`)
   }
   // 지정된 id에 해당하는 Todo정보를 삭제한다.
-  deleteTodo(id) {
-    return http.delete(`/todos/${id}`)
+  updateTodoStatus(id, status) {
+    return http.put(`/todos/${id}/${status}`)
   }
 }
 

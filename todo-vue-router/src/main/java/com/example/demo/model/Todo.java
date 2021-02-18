@@ -70,30 +70,7 @@ public class Todo {
 		this.deletedDate = deletedDate;
 	}
 
-
-
-
-
-
-
 	public enum TodoStatus {
-		COMPLETED("완료"), DELETED("삭제"), DELAYED("지연"), REGISTERED("등록");
-		
-		public String status;
-		
-		TodoStatus(String status) {
-			this.status = status;
-		}
-
-		@JsonValue
-		public String getStatus() {
-			return status;
-		}
-
-		public void setStatus(String status) {
-			this.status = status;
-		}
-
-		
+		COMPLETED, DELETED, DELAYED, REGISTERED;
 	}
 }

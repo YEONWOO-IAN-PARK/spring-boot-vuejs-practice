@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +72,7 @@ public class TodoController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PutMapping("/todos/{id}")
+	@PutMapping("/todos/{id}}")
 	public ResponseEntity<ResponseData<Object>> updateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
 		ResponseData<Object> responseData = new ResponseData<>();
 
@@ -92,14 +91,15 @@ public class TodoController {
 		}
 	}
 	
-	@DeleteMapping("/todos/{id}")
-	public ResponseEntity<ResponseData<Object>> deleteTodo(@PathVariable("id") long id) {
+	@PutMapping("/todos/{id}/{status}")
+	public ResponseEntity<ResponseData<Object>> deleteTodo(@PathVariable("id") long id,
+			@PathVariable("status") String status) {
 		ResponseData<Object> responseData = new ResponseData<>();
 		
 		Optional<Todo> savedTodo = todoRepository.findById(id);
 		if (savedTodo.isPresent()) {
 			Todo todo = savedTodo.get();
-			todo.setStatus(TodoStatus.DELETED);
+			todo.setStatus(TodoStatus.valueOf(status));
 			todo.setDeletedDate(LocalDate.now());
 			todoRepository.save(savedTodo.get());
 			
