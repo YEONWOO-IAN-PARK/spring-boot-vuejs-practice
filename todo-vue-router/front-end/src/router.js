@@ -10,6 +10,11 @@ export default new VueRouter({
             path: '/home',
             name: 'Home',
             component: () => import('./components/Home')
+        },
+        {
+            path: '/todos/main',
+            name: 'TodoMain',
+            component: () => import('./components/todo/Main')
         }
     ]
 })

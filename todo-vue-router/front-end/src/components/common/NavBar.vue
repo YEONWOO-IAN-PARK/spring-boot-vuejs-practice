@@ -5,6 +5,9 @@
       <li class="nav-item">
         <router-link :to="`/home`" class="nav-link">Home</router-link>
       </li>
+      <li class="nav-item">
+        <router-link :to="`/todos/main`" class="nav-link">Todos</router-link>
+      </li>
     </ul>
 	</nav>
 </template>
