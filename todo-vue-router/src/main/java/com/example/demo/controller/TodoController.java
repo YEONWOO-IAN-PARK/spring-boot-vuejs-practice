@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.ResponseData;
 import com.example.demo.dto.ResponseData.ResponseDataStatus;
 import com.example.demo.model.Todo;
+import com.example.demo.model.Todo.TodoStatus;
 import com.example.demo.repository.TodoRepository;
 
 @CrossOrigin("*")
@@ -72,24 +74,41 @@ public class TodoController {
 	}
 	
 	@PutMapping("/todos/{id}")
-	public ResponseEntity<Void> updateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
+	public ResponseEntity<ResponseData<Object>> updateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
+		ResponseData<Object> responseData = new ResponseData<>();
+
 		Optional<Todo> savedTodo = todoRepository.findById(id);
-		ResponseData<Todo> responseData = new ResponseData<>();
 		if (savedTodo.isPresent()) {
 			responseData.setStatus(ResponseDataStatus.OK);
 			BeanUtils.copyProperties(todo, savedTodo.get());
 			todoRepository.save(savedTodo.get());
-			return new ResponseEntity<>(HttpStatus.OK);
+
+			responseData.setStatus(ResponseDataStatus.OK);
+			return new ResponseEntity<>(responseData, HttpStatus.OK);
 		} else {
 			responseData.setStatus(ResponseDataStatus.NOTFOUND);
 			responseData.setMessage("아이디와 일치하는 작업정보를 찾을 수 없습니다.");
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(responseData, HttpStatus.OK);
 		}
 	}
 	
 	@DeleteMapping("/todos/{id}")
-	public ResponseEntity<Void> deleteTodo(@PathVariable("id") long id) {
-		todoRepository.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<ResponseData<Object>> deleteTodo(@PathVariable("id") long id) {
+		ResponseData<Object> responseData = new ResponseData<>();
+		
+		Optional<Todo> savedTodo = todoRepository.findById(id);
+		if (savedTodo.isPresent()) {
+			Todo todo = savedTodo.get();
+			todo.setStatus(TodoStatus.DELETED);
+			todo.setDeletedDate(LocalDate.now());
+			todoRepository.save(savedTodo.get());
+			
+			responseData.setStatus(ResponseDataStatus.OK);
+			return new ResponseEntity<>(responseData, HttpStatus.OK);
+		} else {
+			responseData.setStatus(ResponseDataStatus.NOTFOUND);
+			responseData.setMessage("아이디와 일치하는 작업정보를 찾을 수 없습니다.");
+			return new ResponseEntity<>(responseData, HttpStatus.OK);
+		}
 	}
 }

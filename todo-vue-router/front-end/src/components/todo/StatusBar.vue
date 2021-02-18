@@ -2,19 +2,19 @@
   <div class="row border mt-3 py-3">
     <div class="col-12 d-flex justify-content-between">
       <button class="btn btn-info">
-        Total <span class="badge badge-light">{{totalCount}}</span>
+        전체 <span class="badge badge-light">{{totalCount}}</span>
       </button>
       <button class="btn btn-primary">
-        Registered <span class="badge badge-light">{{registeredCount}}</span>
+        등록 <span class="badge badge-light">{{registeredCount}}</span>
       </button>
       <button class="btn btn-success">
-        Completed <span class="badge badge-light">{{completedCount}}</span>
+        완료 <span class="badge badge-light">{{completedCount}}</span>
       </button>
       <button class="btn btn-secondary">
-        Delayed <span class="badge badge-light">{{delayedCount}}</span>
+        지연 <span class="badge badge-light">{{delayedCount}}</span>
       </button>
       <button class="btn btn-danger">
-        Deleted <span class="badge badge-light">{{deletedCount}}</span>
+        삭제 <span class="badge badge-light">{{deletedCount}}</span>
       </button>
     </div>
   </div>
@@ -33,16 +33,16 @@ export default {
       return this.todos.length;
     },
     registeredCount: function() {
-      return this.countTodosByStatus("REGISTERED")
+      return this.countTodosByStatus("등록")
     },
     completedCount: function () {
-      return this.countTodosByStatus("COMPLETED")
+      return this.countTodosByStatus("완료")
     },
     delayedCount: function() {
-      return this.countTodosByStatus("DELAYED")
+      return this.countTodosByStatus("지연")
     },
     deletedCount: function () {
-      return this.countTodosByStatus("DELETED")
+      return this.countTodosByStatus("삭제")
     }
   }
 }

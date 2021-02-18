@@ -1,21 +1,24 @@
 <template>
   <div class="container">
-    <todo-list :todos="todos"/>
+    <status-bar :todos="todos" />
+    <items :todos="todos" />
   </div>
 </template>
 <script>
 import TodoService from '../../services/TodoService'
-import TodoList from './TodoList'
+import StatusBar from './StatusBar'
+import Items from './Items'
 
 export default {
-  name: "TodoMain",
+  name: 'List',
   data() {
     return {
       todos: []
     }
   },
   components: {
-    'todo-list': TodoList
+    'status-bar': StatusBar,
+    'items': Items
   },
   created() {
     TodoService.getTodos()
@@ -23,7 +26,6 @@ export default {
         var responseData = response.data
         if (responseData.status == 'OK') {
           this.todos = responseData.items
-          console.log(this.todos);
         }
       })
   }

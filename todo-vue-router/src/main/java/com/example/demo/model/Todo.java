@@ -4,10 +4,14 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +44,7 @@ public class Todo {
 	LocalDate dueDate;
 	
 	@Column(name = "TODO_STATUS")
+	@Enumerated(EnumType.STRING)
 	TodoStatus status;
 	
 	@Column(name = "TODO_REGISTERED_DATE")
@@ -51,10 +56,9 @@ public class Todo {
 	@Column(name = "TODO_DELETED_DATE")
 	LocalDate deletedDate;
 	
-	
 	@Builder
 	public Todo(String username, String title, String description, LocalDate dueDate, TodoStatus status,
-			LocalDate registeredDate) {
+			LocalDate registeredDate, LocalDate completedDate, LocalDate deletedDate) {
 		super();
 		this.username = username;
 		this.title = title;
@@ -62,11 +66,34 @@ public class Todo {
 		this.dueDate = dueDate;
 		this.status = status;
 		this.registeredDate = registeredDate;
+		this.completedDate = completedDate;
+		this.deletedDate = deletedDate;
 	}
 
 
 
+
+
+
+
 	public enum TodoStatus {
-		COMPLETED, DELETED, DELAYED, REGISTERED;
+		COMPLETED("완료"), DELETED("삭제"), DELAYED("지연"), REGISTERED("등록");
+		
+		public String status;
+		
+		TodoStatus(String status) {
+			this.status = status;
+		}
+
+		@JsonValue
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
+		
 	}
 }
