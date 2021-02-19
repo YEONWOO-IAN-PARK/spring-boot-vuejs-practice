@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <status-bar :todos="todos" @filteringTodos="filteringTodos"/>
-    <items :todos="filtedTodos" />
+    <todo-status-bar :todos="todos" @filteringTodos="filteringTodos"/>
+    <todo-dashboard-items :todos="filtedTodos" />
   </div>
 </template>
 <script>
 import TodoService from '../../services/TodoService'
-import StatusBar from './StatusBar'
-import Items from './Items'
+import TodoStatusBar from './TodoStatusBar'
+import TodoDashboardItems from './TodoDashboardItems'
 
 export default {
   name: 'List',
@@ -34,8 +34,8 @@ export default {
     }
   },
   components: {
-    'status-bar': StatusBar,
-    'items': Items
+    'todo-status-bar': TodoStatusBar,
+    'todo-dashboard-items': TodoDashboardItems
   },
   created() {
     TodoService.getTodos()

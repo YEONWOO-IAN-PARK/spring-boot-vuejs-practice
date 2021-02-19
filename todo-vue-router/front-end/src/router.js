@@ -7,19 +7,25 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/home',
+      path: '/',
+      alias: '/home',
       name: 'Home',
       component: () => import('./components/Home')
     },
     {
       path: '/todos/list',
       name: 'List',
-      component: () => import('./components/todo/List')
+      component: () => import('./components/todo/TodoDashboard')
     },
     {
       path: '/todos/detail/:id',
       name: 'Detail',
-      component: () => import('./components/todo/Detail')
+      component: () => import('./components/todo/TodoDetail')
+    },
+    {
+      path: '/todos/modify/:id',
+      name: 'Modify',
+      component: () => import('./components/todo/TodoModifyForm')
     }
   ]
 })

@@ -37,16 +37,18 @@
                 </tr>
                 <tr>
                   <th>지연기간</th>
-                  <td></td>
+                  <td><span v-show="todo.status == 'DELAYED'">{{todo.delayedDays}} 일</span></td>
                   <th>삭제일</th>
                   <td>{{todo.deletedDate}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="card-footer text-right">
-            <button :disabled="!disabledBtn(todo.status)"  class="btn btn-danger mr-3" @click="changeTodoStatus(todo.id, 'DELETED')">삭제</button>
-            <button :disabled="!disabledBtn(todo.status)" class="btn btn-success" @click="changeTodoStatus(todo.id, 'COMPLETED')">완료</button>
+          <div class="card-footer">
+            <router-link :to="`/todos/modify/${todo.id}`" v-show="showBtn(todo.status)" class="btn btn-warning mr-3">수정하기</router-link>
+            <button v-show="showBtn(todo.status)"  class="btn btn-danger mr-3" @click="changeTodoStatus(todo.id, 'DELETED')">삭제하기</button>
+            <button v-show="showBtn(todo.status)" class="btn btn-success" @click="changeTodoStatus(todo.id, 'COMPLETED')">완료하기</button>
+            <router-link :to="`/todos/list`" class="btn btn-primary float-right">목록보기</router-link>
           </div>
         </div>
       </div>
@@ -75,7 +77,7 @@ export default {
           }
         })
     },
-    disabledBtn: function(status) {
+    showBtn: function(status) {
       return status == 'REGISTERED' || status == 'DELAYED';
     }
   },

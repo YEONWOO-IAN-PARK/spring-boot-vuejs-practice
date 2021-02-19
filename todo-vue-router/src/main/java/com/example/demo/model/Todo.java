@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -68,6 +67,10 @@ public class Todo {
 		this.registeredDate = registeredDate;
 		this.completedDate = completedDate;
 		this.deletedDate = deletedDate;
+	}
+	
+	public int getDelayedDays() {
+		return Period.between(dueDate, LocalDate.now()).getDays();
 	}
 
 	public enum TodoStatus {
