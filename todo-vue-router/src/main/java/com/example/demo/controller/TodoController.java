@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ResponseData;
 import com.example.demo.dto.ResponseData.ResponseDataStatus;
+import com.example.demo.form.TodoForm;
 import com.example.demo.model.Todo;
 import com.example.demo.model.Todo.TodoStatus;
 import com.example.demo.repository.TodoRepository;
@@ -72,15 +73,15 @@ public class TodoController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PutMapping("/todos/{id}}")
-	public ResponseEntity<ResponseData<Object>> updateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
+	@PutMapping("/todos/{id}")
+	public ResponseEntity<ResponseData<Object>> updateTodo(@PathVariable("id") long id, @RequestBody TodoForm todoForm) {
 		ResponseData<Object> responseData = new ResponseData<>();
 
 		Optional<Todo> savedTodo = todoRepository.findById(id);
 		if (savedTodo.isPresent()) {
-			responseData.setStatus(ResponseDataStatus.OK);
-			BeanUtils.copyProperties(todo, savedTodo.get());
-			todoRepository.save(savedTodo.get());
+			Todo todo = savedTodo.get();
+			BeanUtils.copyProperties(todoForm, todo);
+			todoRepository.save(todo);
 
 			responseData.setStatus(ResponseDataStatus.OK);
 			return new ResponseEntity<>(responseData, HttpStatus.OK);

@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header">{{formTitle}}</div>
     <div class="card-body">
-      <form>
+      <form novalidate @submit.prevent="insertOrUpdateTodo">
         <div class="form-row">
           <div class="form-group col-6">
             <label>작성자</label>
@@ -27,7 +27,7 @@
         </div>
         <div class="text-right">
           <router-link :to="`/todos/detail/${todo.id}`" class="btn btn-secondary mr-3">취소</router-link>
-          <button type="button" class="btn btn-primary">수정</button>
+          <button type="submit" class="btn btn-primary" >완료</button>
         </div>
       </form>
     </div>
@@ -36,6 +36,15 @@
 <script>
 export default {
   name: 'TodoForm',
-  props: ['formTitle', 'todo']
+  props: ['formTitle', 'todo', 'cb'],
+  methods: {
+    insertOrUpdateTodo: function() {
+      if (!this.todo.username || !this.todo.dueDate || !this.todo.title || !this.todo.description) {
+        alert('입력값이 누락되었습니다.');
+        return false
+      }
+      this.cb(this.todo);
+    }
+  },
 }
 </script>

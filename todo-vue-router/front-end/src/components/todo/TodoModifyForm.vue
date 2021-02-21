@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <todo-form :formTitle="formTitle" :todo="todo"/>
+        <todo-form :formTitle="formTitle" :todo="todo" :cb="updateTodo"/>
       </div>
     </div>
   </div>
@@ -19,6 +19,22 @@ export default {
       todo: {}
     }
   },
+  methods: {
+    updateTodo: function(todo) {
+      TodoService.updateTodo(todo)
+        .then(response => {
+          var responseData = response.data;
+          if (responseData.status == 'OK') {
+            this.$router.push(`/todos/detail/${todo.id}`)
+          } else {
+            alert("수정 작업 중 오류가 발생하였습니다.");
+          }
+        })
+    }
+  },
+  components: {
+    'todo-form': TodoForm
+  },
   created() {
     TodoService.getTodo(this.$route.params.id)
       .then(response => {
@@ -29,9 +45,6 @@ export default {
           alert(responseData.message)
         }
       })
-  },
-  components: {
-    'todo-form': TodoForm
   }
 }
 </script>

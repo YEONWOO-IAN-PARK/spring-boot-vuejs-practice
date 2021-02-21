@@ -1,6 +1,6 @@
 <template>
-  <div class="row border mt-3 py-3">
-    <div class="col-12 d-flex justify-content-between">
+  <div class="row border mt-3">
+    <div class="col-10 py-3 d-flex justify-content-between">
       <button class="btn btn-info" @click="filteringTodos()">
         전체 <span class="badge badge-light">{{totalCount}}</span>
       </button>
@@ -16,6 +16,9 @@
       <button class="btn btn-danger" @click="filteringTodos('DELETED')">
         삭제 <span class="badge badge-light">{{deletedCount}}</span>
       </button>
+    </div>
+    <div class="col-2 text-center py-3">
+      <router-link :to="`/todos/form`" class="btn btn-outline-primary">새 일정추가</router-link>
     </div>
   </div>
 </template>

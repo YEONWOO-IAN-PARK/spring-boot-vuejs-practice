@@ -18,6 +18,11 @@ export default new VueRouter({
       component: () => import('./components/todo/TodoDashboard')
     },
     {
+      path: '/todos/form',
+      name: 'Form',
+      component: () => import('./components/todo/TodoRegisterForm')
+    },
+    {
       path: '/todos/detail/:id',
       name: 'Detail',
       component: () => import('./components/todo/TodoDetail')
