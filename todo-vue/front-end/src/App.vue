@@ -9,26 +9,29 @@
         </div>
       </div>
       <!-- 헤더부 끝 -->
-
-      <div class="row">
-        <div class="col-10">
-          <button class="btn"></button>
-          <button class="btn"></button>
-          <button class="btn"></button>
-          <button class="btn"></button>
-          <button class="btn"></button></div>
-        <div class="col-2"></div>
-      </div>
-
       <!-- Todo 카드 표시부 시작 -->
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">Todo List</div>
             <div class="card-body">
+              <!-- Todo 현황 표시 버튼 시작 -->
+              <div class="row px-3">
+                <div class="col-10 p-3 border border-right-0  d-flex justify-content-between">
+                  <button class="btn btn-info" @click="filteringTodos()">전체 <span class="badge badge-light">{{totalCount}}</span></button>
+                  <button class="btn btn-primary" @click="filteringTodos('REGISTERED')">등록됨 <span class="badge badge-light">{{registeredCount}}</span></button>
+                  <button class="btn btn-success" @click="filteringTodos('COMPLETED')">완료됨 <span class="badge badge-light">{{completedCount}}</span></button>
+                  <button class="btn btn-secondary" @click="filteringTodos('DELAYED')">지연됨 <span class="badge badge-light">{{delayedCount}}</span></button>
+                  <button class="btn btn-danger" @click="filteringTodos('DELETED')">삭제됨 <span class="badge badge-light">{{deletedCount}}</span></button>
+                </div>
+                <div class="col-2 p-3 border border-left-0 text-right">
+                  <button class="btn btn-outline-primary">새 Todo 등록</button>
+                </div>
+              </div>
+              <!-- Todo 현황 표시 버튼 끝 -->
               <div class="row">
                 <!-- Todo 카드 시작-->
-                <div class="col-3 mt-3 p-3 " v-for="(todo, index) in todos" :key="index">
+                <div class="col-3 mt-3 p-3 " v-for="(todo, index) in filtedTodos" :key="index">
                   <div class="card shadow ">
                     <div class="card-header">{{todo.title}}</div>
                     <div class="card-body">
@@ -61,10 +64,28 @@ export default {
   name: 'App',
   data() {
     return {
-      todos: []
+      todos: [],
+      filtedTodos: []
     }
   },
   methods: {
+    filteringTodos: function(status) {
+      this.filtedTodos = []
+      if (status) {
+        this.todos.filter(todo => {
+          return todo.status == status
+        }).forEach(todo => {
+          this.filtedTodos.push(todo)
+        })
+      } else {
+        this.todos.forEach(todo => {
+          this.filtedTodos.push(todo)
+        });
+      }
+    },
+    countTodosByStatus: function(status) {
+      return this.todos.filter(todo => todo.status == status).length
+    },
     badgeStyle: function(status) {
       return {
         'badge-primary': status == 'REGISTERED',
@@ -75,7 +96,21 @@ export default {
     }
   },
   computed: {
-
+    totalCount: function() {
+      return this.todos.length;
+    },
+    registeredCount: function() {
+      return this.countTodosByStatus("REGISTERED")
+    },
+    completedCount: function () {
+      return this.countTodosByStatus("COMPLETED")
+    },
+    delayedCount: function() {
+      return this.countTodosByStatus("DELAYED")
+    },
+    deletedCount: function () {
+      return this.countTodosByStatus("DELETED")
+    }
   },
   filters: {
     statusToLocaleString: function(status) {
@@ -89,6 +124,7 @@ export default {
     TodoService.getTodos()
       .then(response => {
         this.todos = response.data.items
+        this.filtedTodos = response.data.items
       })
   }
 }
