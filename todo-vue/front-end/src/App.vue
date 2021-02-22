@@ -1,17 +1,33 @@
 <template>
+  <!-- Vue 인스턴스 영역 시작 -->
   <div id="app">
     <div class="container">
+      <!-- 헤더부 시작 -->
       <div class="row">
         <div class="col-12">
           <h1>Todo Application</h1>
         </div>
       </div>
+      <!-- 헤더부 끝 -->
+
+      <div class="row">
+        <div class="col-10">
+          <button class="btn"></button>
+          <button class="btn"></button>
+          <button class="btn"></button>
+          <button class="btn"></button>
+          <button class="btn"></button></div>
+        <div class="col-2"></div>
+      </div>
+
+      <!-- Todo 카드 표시부 시작 -->
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">Todo List</div>
             <div class="card-body">
               <div class="row">
+                <!-- Todo 카드 시작-->
                 <div class="col-3 mt-3 p-3 " v-for="(todo, index) in todos" :key="index">
                   <div class="card shadow ">
                     <div class="card-header">{{todo.title}}</div>
@@ -25,13 +41,16 @@
                     </div>
                   </div>
                 </div>
+                <!-- Todo 카드 끝 -->
               </div>
             </div>
           </div> 
         </div>
       </div>
+      <!-- Todo 카드 표시부 끝 -->
     </div>
   </div>
+  <!-- Vue 인스턴스 영역 끝 -->
 </template>
 
 <script>
