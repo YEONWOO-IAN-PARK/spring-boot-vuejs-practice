@@ -9,6 +9,40 @@
         </div>
       </div>
       <!-- 헤더부 끝 -->
+
+      <div class="row">
+        <div class="col-12">
+          <form novalidate @submit.prevent="insertOrUpdateTodo">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label>작성자</label>
+                <input type="text" class="form-control" v-model="todo.username">
+              </div>
+              <div class="form-group col-6">
+                <label>예정일자</label>
+                <input type="date" class="form-control" v-model="todo.dueDate">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-12">
+                <label>제목</label>
+                <input type="text" class="form-control" v-model="todo.title">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-12">
+                <label>설명</label>
+                <textarea rows="5" class="form-control" v-model="todo.description"></textarea>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-secondary">닫기</button>
+              <button type="button" class="btn btn-primary" >완료</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <!-- Todo 카드 표시부 시작 -->
       <div class="row">
         <div class="col-12">
@@ -64,6 +98,7 @@ export default {
   name: 'App',
   data() {
     return {
+      todo: {},
       todos: [],
       filtedTodos: []
     }
