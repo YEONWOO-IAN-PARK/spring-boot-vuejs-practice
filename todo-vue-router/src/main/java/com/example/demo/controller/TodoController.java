@@ -69,6 +69,8 @@ public class TodoController {
 	
 	@PostMapping("/todos")
 	public ResponseEntity<Void> insertTodo(@RequestBody Todo todo) {
+		todo.setStatus(TodoStatus.REGISTERED);
+		todo.setRegisteredDate(LocalDate.now());
 		todoRepository.save(todo);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
