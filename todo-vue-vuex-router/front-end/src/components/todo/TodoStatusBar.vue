@@ -26,8 +26,8 @@
 
 export default {
   methods: {
-    updateFilteredTodos() {
-
+    updateFilteredTodos(status) {
+      this.$emit('updatefilteredTodos', status)
     },
     todosCountByStatus() {
       return 0

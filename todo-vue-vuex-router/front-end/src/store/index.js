@@ -5,24 +5,36 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todos: []
+    todos: [],
+    filteredTodos: []
   },
   getters: {
-
   }, 
   actions: {
     fetchTodos({commit}) {
       Todo.getTodos()
         .then(response => {
           if (response.data.status == 'OK') {
-            commit('setTodos', response.data.itme)
+            commit('setTodos', response.data.items)
+            commit('setFilteredTodos')
           }
         })
+    },
+    changeFilteredTodos({commit}, status) {
+      commit('setFilteredTodos', status)
     }
   },
   mutations: {
     setTodos(state, todos) {
       state.todos = todos
-    }
+    },
+    setFilteredTodos(state, status) {
+      state.filteredTodos = state.todos.filter(todo => {
+        if (status) {
+          return todo.status == status
+        }
+        return true
+      })
+    } 
   }
 })
