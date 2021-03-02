@@ -1,27 +1,21 @@
 <template>
   <div class="container">
-    <todo-status-bar @updateFilteredTodos="updateFilteredTodos"/>
-    <todo-list-items :todos="filteredTodos"/>
+    <todo-status-bar />
+    <todo-list-items :todos="todos"/>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
 import TodoStatusBar from './TodoStatusBar'
 import TodoListItems from './TodoListItems'
 
 export default {
-  methods: {
-    ...mapActions([
-      'fetchTodos', 'updateFilteredTodos'
-    ])
-  },
   computed: {
-    ...mapState([
-      'todos', 'filteredTodos'
-    ])
+    todos() {
+      return this.$store.todos
+    }
   },
   created() {
-    this.fetchTodos()
+    this.$store.dispatch('fetchTodos')
   },
   components: {
     TodoStatusBar,

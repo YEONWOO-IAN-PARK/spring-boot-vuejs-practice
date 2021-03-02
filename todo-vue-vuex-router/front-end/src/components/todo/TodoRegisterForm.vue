@@ -1,18 +1,17 @@
 <template>
   <div class="container">
     <div class="col-12">
-      <todo-form :formTitle="formTitle" :todo="todo" :callback="addTodo"/>
+      <todo-form :formTitle="formTitle" :todo="todo" />
     </div>
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
 import TodoForm from './TodoForm'
 
 export default {
   data() {
     return {
-      formTitle: 'Todo 정보 입력폼', 
+      formTitle: 'Todo 정보 입력폼',
       todo: {
         username: '',
         dueDate: '',
@@ -22,13 +21,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'insertTodo'
-    ]),
-    addTodo: function(todo) {
-      this.insertTodo(todo)
-      this.$router.push('/todos/list')
-    }
+   
+  },
+  computed: {
+   
   },
   components: {
     TodoForm

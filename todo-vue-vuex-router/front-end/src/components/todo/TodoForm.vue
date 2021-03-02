@@ -35,14 +35,14 @@
 </template>
 <script>
 export default {
-  props: ['formTitle', 'todo', 'callback'],
+  props: ['formTitle', 'todo', ],
   methods: {
     insertOrUpdateTodo: function() {
       if (!this.todo.username || !this.todo.dueDate || !this.todo.title || !this.todo.description) {
         alert('입력값이 누락되었습니다.');
         return false
       }
-      this.callback(this.todo);
+      //this.callback(this.todo);
     }
   }
 }
