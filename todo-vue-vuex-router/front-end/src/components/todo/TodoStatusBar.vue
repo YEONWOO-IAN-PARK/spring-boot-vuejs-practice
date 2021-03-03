@@ -23,17 +23,17 @@
   </div>
 </template>
 <script>
-
+import {mapGetters} from 'vuex'
 export default {
   methods: {
     updateFilteredTodos(status) {
       this.$emit('updatefilteredTodos', status)
-    },
-    todosCountByStatus() {
-      return 0
-   }
+    }
   },
   computed: {
+    ...mapGetters([
+      'todosCountByStatus'
+    ])
   }
 }
 </script>

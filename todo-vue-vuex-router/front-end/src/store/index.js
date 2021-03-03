@@ -9,6 +9,12 @@ export default new Vuex.Store({
     filteredTodos: []
   },
   getters: {
+    todosCountByStatus: (state) => (status) => {	
+      if (status) {	
+        return state.todos.filter(todo => todo.status == status).length	
+      }	
+      return state.todos.length	
+    }
   }, 
   actions: {
     fetchTodos({commit}) {
