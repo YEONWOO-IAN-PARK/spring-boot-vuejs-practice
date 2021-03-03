@@ -7,7 +7,7 @@
           <p class="card-text"><strong>예정일자 : </strong>{{todo.dueDate}}</p>
           <div>
             <span class="badge p-2" :class="badgeStyle(todo.status)">{{todo.status }}</span>
-            <button @click="viewDetail()" class="btn btn-outline-primary btn-sm float-right">상세정보</button>
+            <router-link :to='`/todos/detail/${todo.id}`' class="btn btn-outline-primary btn-sm float-right">상세정보</router-link>
           </div>  
       </div>
     </div>
@@ -17,12 +17,6 @@
 export default {
   props: ["todo"],
   methods: {
-    viewDetail: function() {
-      this.$store.dispatch('fetchTodo', this.todo.id)
-      .then(() => {
-        this.$router.push(`/todos/detail/${this.todo.id}`)
-      })
-    },
     badgeStyle: function(status) {
       return {
         'badge-primary': status == 'REGISTERED',

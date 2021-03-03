@@ -44,19 +44,13 @@ export default new Vuex.Store({
           })
       })
     },
-    changeTodoStatus({commit}, id, status) {
-      return new Promise(function(resolve, reject) {
-        Todo.updateTodoStatus(id, status)
-          .then((response) => {
-            if (response.data.status == 'OK') {
-              commit('setTodo', response.data.item[0])
-              resolve()
-            }
-          })
-          .catch(function() {
-            reject()
-          })
-      })
+    changeTodoStatus({dispatch}, opt) {
+      Todo.updateTodoStatus(opt.id, opt.status)
+        .then((response) => {
+          if (response.data.status == 'OK') {
+            dispatch('fetchTodo', opt.id)
+          }
+        })
     },
     insertTodo({dispatch}, todo) {
       return new Promise(function(resolve, reject) {

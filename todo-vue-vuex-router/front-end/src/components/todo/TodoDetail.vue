@@ -64,16 +64,16 @@ export default {
       return this.todo.status == 'REGISTERED' || this.todo.status == 'DELAYED';
     },
     changeTodoStatus(status) {
-      this.$store.dispatch('changeTodoStatus', this.todo.id, status)
-      .then(() => {
-        
-      })
+      this.$store.dispatch('changeTodoStatus', {id:this.todo.id, status:status})
     }
   },
   computed: {
     ...mapState([
       'todo'
     ])
+  },
+  created() {
+    this.$store.dispatch('fetchTodo', this.$route.params.id)
   },
   filters: {
     statusToLocaleString: function(status) {
