@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="col-12">
-      <todo-form :formTitle="formTitle" :todo="todo" />
+      <todo-form :formTitle="formTitle" :todo="todo" :callback="addTodo"/>
     </div>
   </div>
 </template>
@@ -21,10 +21,12 @@ export default {
     }
   },
   methods: {
-   
-  },
-  computed: {
-   
+    addTodo:function() {
+      this.$store.dispatch('insertTodo', this.todo)
+      .then(() => {
+        this.$router.push("/todos/list")
+      })
+    }
   },
   components: {
     TodoForm

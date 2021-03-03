@@ -12,9 +12,14 @@ export default new VueRouter({
       component: () => import('./components/Home')
     },
     {
-      path:'/todos/list',
+      path: '/todos/list',
       name: 'TodoList',
       component: () => import('./components/todo/TodoList')
+    },
+    {
+      path: '/todos/detail/:id',
+      name: 'TodoDetail',
+      component: () => import('./components/todo/TodoDetail')
     },
     {
       path: '/todos/form',

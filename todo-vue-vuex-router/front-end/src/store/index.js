@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    todo: {},
     todos: [],
     filteredTodos: []
   },
@@ -24,15 +25,58 @@ export default new Vuex.Store({
             commit('setTodos', response.data.items)
             commit('setFilteredTodos')
           }
-        })
+        }) 
     },
     changeFilteredTodos({commit}, status) {
       commit('setFilteredTodos', status)
+    },
+    fetchTodo({commit}, id) {
+      return new Promise(function(resolve, reject) {
+        Todo.getTodo(id)
+          .then(response => {
+            if (response.data.status == 'OK') {
+              commit('setTodo', response.data.items[0])
+              resolve()
+            }
+          })
+          .catch(function() {
+            reject()
+          })
+      })
+    },
+    changeTodoStatus({commit}, id, status) {
+      return new Promise(function(resolve, reject) {
+        Todo.updateTodoStatus(id, status)
+          .then((response) => {
+            if (response.data.status == 'OK') {
+              commit('setTodo', response.data.item[0])
+              resolve()
+            }
+          })
+          .catch(function() {
+            reject()
+          })
+      })
+    },
+    insertTodo({dispatch}, todo) {
+      return new Promise(function(resolve, reject) {
+        Todo.insertTodo(todo)
+          .then(() => {
+            dispatch('fetchTodos')
+            resolve()
+          })
+          .catch(function() {
+            reject()
+          })
+      })
     }
   },
   mutations: {
     setTodos(state, todos) {
       state.todos = todos
+    },
+    setTodo(state, todo) {
+      state.todo = todo
     },
     setFilteredTodos(state, status) {
       state.filteredTodos = state.todos.filter(todo => {
