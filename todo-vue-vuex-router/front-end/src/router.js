@@ -22,6 +22,11 @@ export default new VueRouter({
       component: () => import('./components/todo/TodoDetail')
     },
     {
+      path: '/todos/modify/:id',
+      name: 'TodoModifyForm',
+      component: () => import('./components/todo/TodoModifyForm')
+    },
+    {
       path: '/todos/form',
       name: 'TodoRegisterForm',
       component: () => import('./components/todo/TodoRegisterForm')
