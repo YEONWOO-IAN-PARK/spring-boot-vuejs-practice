@@ -103,7 +103,11 @@ public class TodoController {
 		if (savedTodo.isPresent()) {
 			Todo todo = savedTodo.get();
 			todo.setStatus(TodoStatus.valueOf(status));
-			todo.setDeletedDate(LocalDate.now());
+			if (todo.getStatus() == TodoStatus.COMPLETED) {
+				todo.setCompletedDate(LocalDate.now());
+			} else if (todo.getStatus() == TodoStatus.DELETED) {
+				todo.setDeletedDate(LocalDate.now());
+			}
 			todoRepository.save(savedTodo.get());
 			
 			responseData.setStatus(ResponseDataStatus.OK);
