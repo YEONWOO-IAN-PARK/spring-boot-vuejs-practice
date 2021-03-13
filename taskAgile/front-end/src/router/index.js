@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/login',
     name: 'LoginPage',
-    component: () => import('./')
+    component: () => import('../views/LoginPage')
   }
 ]
 
